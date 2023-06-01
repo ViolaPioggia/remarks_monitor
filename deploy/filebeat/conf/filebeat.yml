@@ -14,10 +14,8 @@ processors:
   - add_docker_metadata: ~
 
 output.kafka:
-  enabled: true
   hosts: ["kafka:9092"]
-  #要提前创建topic
-  topic: "looklook-log"
+  topic: "remarks_monitor_logs"
   partition.hash:
     reachable_only: true
   compression: gzip

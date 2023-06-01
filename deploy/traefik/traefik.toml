@@ -1,0 +1,10 @@
+[api]
+    dashboard = true
+
+[providers]
+    [providers.docker]
+        exposedByDefault = false
+
+[entryPoints]
+    [entryPoints.web]
+        address = ":8077"
