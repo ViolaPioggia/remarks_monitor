@@ -1,0 +1,38 @@
+global:
+  scrape_interval:
+  external_labels:
+    monitor: 'remarks-monitor'
+
+scrape_configs:
+  - job_name: 'prometheus'
+    scrape_interval: 5s  #global catch time
+    static_configs:
+      - targets: ['0.0.0.0:9090']
+  - job_name: 'usercenter-api'
+    static_configs:
+      - targets: ['192.168.26.1:4001']
+        labels:
+          job: usercenter-api
+          app: usercenter-api
+          env: dev
+  - job_name: 'usercenter-rpc'
+    static_configs:
+      - targets: ['192.168.26.1:4002']
+        labels:
+          job: usercenter-rpc
+          app: usercenter-rpc
+          env: dev
+#  - job_name: 'mqueue-job'
+#    static_configs:
+#      - targets: [ 'looklook:4010' ]
+#        labels:
+#          job: mqueue-job
+#          app: mqueue-job
+#          env: dev
+#  - job_name: 'mqueue-scheduler'
+#    static_configs:
+#      - targets: [ 'looklook:4011' ]
+#        labels:
+#          job: mqueue-scheduler
+#          app: mqueue-scheduler
+#          env: dev
