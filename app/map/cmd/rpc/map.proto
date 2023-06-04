@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option go_package = "./pb";
+
+package pb;
+
+message Task  {
+  string TaskType=1  ;  // 任务类型判断到底是map还是reduce
+  int64 TaskId =2        ;  // 任务的id
+  int64 ReducerNum =3;      // 传入的reducer的数量，用于hash
+  string Filename   =4;   // 输入文件
+}
+
+message MapReq {
+  Task task=1;
+}
+
+message MapResp {
+}
+
+//service
+service MapTask {
+  rpc mapTask(MapReq) returns (MapResp);
+}

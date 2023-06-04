@@ -1,6 +1,16 @@
 version: '3'
 
 services:
+  consul:
+    image: consul
+    container_name: consul
+    restart: always
+    ports:
+      - "8500:8500"
+    environment:
+       TZ: Asia/Shanghai
+    networks:
+      - remarks-monitor_net
   jaeger:
     image: jaegertracing/all-in-one:latest
     container_name: jaeger

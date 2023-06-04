@@ -2,8 +2,6 @@ package user
 
 import (
 	"context"
-	"fmt"
-	"github.com/jinzhu/copier"
 	"remarks_monitor/app/usercenter/cmd/rpc/usercenter"
 
 	"remarks_monitor/app/usercenter/cmd/api/internal/svc"
@@ -34,8 +32,9 @@ func (l *RegisterLogic) Register(req *types.RegisterReq) (resp *types.RegisterRe
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(*registerResp)
-	_ = copier.Copy(&resp, registerResp)
-	fmt.Println(*resp)
-	return resp, nil
+	return &types.RegisterResp{
+		AccessToken:  registerResp.AccessToken,
+		AccessExpire: registerResp.AccessExpire,
+		RefreshAfter: registerResp.RefreshAfter,
+	}, nil
 }

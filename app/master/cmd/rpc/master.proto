@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option go_package = "./pb";
+
+package pb;
+
+
+message WorkReq {
+
+}
+
+message WorkResp {
+}
+
+//service
+service Master {
+  rpc master(WorkReq) returns (WorkResp);
+}

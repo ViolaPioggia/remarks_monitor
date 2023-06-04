@@ -2,7 +2,6 @@ package user
 
 import (
 	"context"
-	"github.com/jinzhu/copier"
 	"remarks_monitor/app/usercenter/cmd/rpc/usercenter"
 
 	"remarks_monitor/app/usercenter/cmd/api/internal/svc"
@@ -34,7 +33,9 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err erro
 		return nil, err
 	}
 
-	_ = copier.Copy(&resp, loginResp)
-
-	return resp, nil
+	return &types.LoginResp{
+		AccessToken:  loginResp.AccessToken,
+		AccessExpire: loginResp.AccessExpire,
+		RefreshAfter: loginResp.RefreshAfter,
+	}, nil
 }

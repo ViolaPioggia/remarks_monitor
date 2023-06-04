@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option go_package = "./pb";
+
+package pb;
+
+//req 、resp
+message InputReq {
+  string ip = 1;
+  string domain =2;
+  string content = 3;
+}
+message InputResp {
+
+}
+
+//message SplitReq {
+//  string username = 1;
+//  string password = 2;
+//}
+//message SplitResp {
+//
+//}
+
+//service
+service input {
+  rpc input(InputReq) returns(InputResp);
+}

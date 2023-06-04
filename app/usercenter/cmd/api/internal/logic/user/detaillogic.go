@@ -2,7 +2,7 @@ package user
 
 import (
 	"context"
-	"github.com/jinzhu/copier"
+	"fmt"
 	"remarks_monitor/app/usercenter/cmd/rpc/usercenter"
 	"remarks_monitor/common/ctxdata"
 
@@ -37,9 +37,10 @@ func (l *DetailLogic) Detail(req *types.UserInfoReq) (resp *types.UserInfoResp, 
 	}
 
 	var userInfo types.User
-	_ = copier.Copy(&userInfo, userInfoResp.User)
+	userInfo.Id = userInfoResp.User.Id
+	userInfo.Username = userInfoResp.User.Username
+	userInfo.Password = userInfoResp.User.Password
+	fmt.Println(userInfo)
 
-	return &types.UserInfoResp{
-		UserInfo: userInfo,
-	}, nil
+	return &types.UserInfoResp{UserInfo: userInfo}, nil
 }
