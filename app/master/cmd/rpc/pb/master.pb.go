@@ -20,6 +20,99 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type GetMapReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *GetMapReq) Reset() {
+	*x = GetMapReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_master_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetMapReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetMapReq) ProtoMessage() {}
+
+func (x *GetMapReq) ProtoReflect() protoreflect.Message {
+	mi := &file_master_proto_msgTypes[0]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetMapReq.ProtoReflect.Descriptor instead.
+func (*GetMapReq) Descriptor() ([]byte, []int) {
+	return file_master_proto_rawDescGZIP(), []int{0}
+}
+
+type GetMapResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	MNum  int64    `protobuf:"varint,1,opt,name=MNum,proto3" json:"MNum,omitempty"`
+	Files []string `protobuf:"bytes,2,rep,name=files,proto3" json:"files,omitempty"`
+}
+
+func (x *GetMapResp) Reset() {
+	*x = GetMapResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_master_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetMapResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetMapResp) ProtoMessage() {}
+
+func (x *GetMapResp) ProtoReflect() protoreflect.Message {
+	mi := &file_master_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetMapResp.ProtoReflect.Descriptor instead.
+func (*GetMapResp) Descriptor() ([]byte, []int) {
+	return file_master_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *GetMapResp) GetMNum() int64 {
+	if x != nil {
+		return x.MNum
+	}
+	return 0
+}
+
+func (x *GetMapResp) GetFiles() []string {
+	if x != nil {
+		return x.Files
+	}
+	return nil
+}
+
 type WorkReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -29,7 +122,7 @@ type WorkReq struct {
 func (x *WorkReq) Reset() {
 	*x = WorkReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_master_proto_msgTypes[0]
+		mi := &file_master_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -42,7 +135,7 @@ func (x *WorkReq) String() string {
 func (*WorkReq) ProtoMessage() {}
 
 func (x *WorkReq) ProtoReflect() protoreflect.Message {
-	mi := &file_master_proto_msgTypes[0]
+	mi := &file_master_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -55,7 +148,7 @@ func (x *WorkReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WorkReq.ProtoReflect.Descriptor instead.
 func (*WorkReq) Descriptor() ([]byte, []int) {
-	return file_master_proto_rawDescGZIP(), []int{0}
+	return file_master_proto_rawDescGZIP(), []int{2}
 }
 
 type WorkResp struct {
@@ -67,7 +160,7 @@ type WorkResp struct {
 func (x *WorkResp) Reset() {
 	*x = WorkResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_master_proto_msgTypes[1]
+		mi := &file_master_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -80,7 +173,7 @@ func (x *WorkResp) String() string {
 func (*WorkResp) ProtoMessage() {}
 
 func (x *WorkResp) ProtoReflect() protoreflect.Message {
-	mi := &file_master_proto_msgTypes[1]
+	mi := &file_master_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -93,19 +186,26 @@ func (x *WorkResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WorkResp.ProtoReflect.Descriptor instead.
 func (*WorkResp) Descriptor() ([]byte, []int) {
-	return file_master_proto_rawDescGZIP(), []int{1}
+	return file_master_proto_rawDescGZIP(), []int{3}
 }
 
 var File_master_proto protoreflect.FileDescriptor
 
 var file_master_proto_rawDesc = []byte{
 	0x0a, 0x0c, 0x6d, 0x61, 0x73, 0x74, 0x65, 0x72, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x02,
-	0x70, 0x62, 0x22, 0x09, 0x0a, 0x07, 0x57, 0x6f, 0x72, 0x6b, 0x52, 0x65, 0x71, 0x22, 0x0a, 0x0a,
-	0x08, 0x57, 0x6f, 0x72, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x32, 0x2d, 0x0a, 0x06, 0x4d, 0x61, 0x73,
-	0x74, 0x65, 0x72, 0x12, 0x23, 0x0a, 0x06, 0x6d, 0x61, 0x73, 0x74, 0x65, 0x72, 0x12, 0x0b, 0x2e,
-	0x70, 0x62, 0x2e, 0x57, 0x6f, 0x72, 0x6b, 0x52, 0x65, 0x71, 0x1a, 0x0c, 0x2e, 0x70, 0x62, 0x2e,
-	0x57, 0x6f, 0x72, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x42, 0x06, 0x5a, 0x04, 0x2e, 0x2f, 0x70, 0x62,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x70, 0x62, 0x22, 0x0b, 0x0a, 0x09, 0x47, 0x65, 0x74, 0x4d, 0x61, 0x70, 0x52, 0x65, 0x71, 0x22,
+	0x36, 0x0a, 0x0a, 0x47, 0x65, 0x74, 0x4d, 0x61, 0x70, 0x52, 0x65, 0x73, 0x70, 0x12, 0x12, 0x0a,
+	0x04, 0x4d, 0x4e, 0x75, 0x6d, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x04, 0x4d, 0x4e, 0x75,
+	0x6d, 0x12, 0x14, 0x0a, 0x05, 0x66, 0x69, 0x6c, 0x65, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x09,
+	0x52, 0x05, 0x66, 0x69, 0x6c, 0x65, 0x73, 0x22, 0x09, 0x0a, 0x07, 0x57, 0x6f, 0x72, 0x6b, 0x52,
+	0x65, 0x71, 0x22, 0x0a, 0x0a, 0x08, 0x57, 0x6f, 0x72, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x32, 0x56,
+	0x0a, 0x06, 0x4d, 0x61, 0x73, 0x74, 0x65, 0x72, 0x12, 0x23, 0x0a, 0x06, 0x6d, 0x61, 0x73, 0x74,
+	0x65, 0x72, 0x12, 0x0b, 0x2e, 0x70, 0x62, 0x2e, 0x57, 0x6f, 0x72, 0x6b, 0x52, 0x65, 0x71, 0x1a,
+	0x0c, 0x2e, 0x70, 0x62, 0x2e, 0x57, 0x6f, 0x72, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x12, 0x27, 0x0a,
+	0x06, 0x47, 0x65, 0x74, 0x4d, 0x61, 0x70, 0x12, 0x0d, 0x2e, 0x70, 0x62, 0x2e, 0x47, 0x65, 0x74,
+	0x4d, 0x61, 0x70, 0x52, 0x65, 0x71, 0x1a, 0x0e, 0x2e, 0x70, 0x62, 0x2e, 0x47, 0x65, 0x74, 0x4d,
+	0x61, 0x70, 0x52, 0x65, 0x73, 0x70, 0x42, 0x06, 0x5a, 0x04, 0x2e, 0x2f, 0x70, 0x62, 0x62, 0x06,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -120,16 +220,20 @@ func file_master_proto_rawDescGZIP() []byte {
 	return file_master_proto_rawDescData
 }
 
-var file_master_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_master_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_master_proto_goTypes = []interface{}{
-	(*WorkReq)(nil),  // 0: pb.WorkReq
-	(*WorkResp)(nil), // 1: pb.WorkResp
+	(*GetMapReq)(nil),  // 0: pb.GetMapReq
+	(*GetMapResp)(nil), // 1: pb.GetMapResp
+	(*WorkReq)(nil),    // 2: pb.WorkReq
+	(*WorkResp)(nil),   // 3: pb.WorkResp
 }
 var file_master_proto_depIdxs = []int32{
-	0, // 0: pb.Master.master:input_type -> pb.WorkReq
-	1, // 1: pb.Master.master:output_type -> pb.WorkResp
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
+	2, // 0: pb.Master.master:input_type -> pb.WorkReq
+	0, // 1: pb.Master.GetMap:input_type -> pb.GetMapReq
+	3, // 2: pb.Master.master:output_type -> pb.WorkResp
+	1, // 3: pb.Master.GetMap:output_type -> pb.GetMapResp
+	2, // [2:4] is the sub-list for method output_type
+	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -142,7 +246,7 @@ func file_master_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_master_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*WorkReq); i {
+			switch v := v.(*GetMapReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -154,6 +258,30 @@ func file_master_proto_init() {
 			}
 		}
 		file_master_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetMapResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_master_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*WorkReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_master_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*WorkResp); i {
 			case 0:
 				return &v.state
@@ -172,7 +300,7 @@ func file_master_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_master_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -4,7 +4,13 @@ option go_package = "./pb";
 
 package pb;
 
+message GetMapReq{
 
+}
+message GetMapResp{
+  int64 MNum=1;
+  repeated string files=2;
+}
 message WorkReq {
 
 }
@@ -15,4 +21,5 @@ message WorkResp {
 //service
 service Master {
   rpc master(WorkReq) returns (WorkResp);
+  rpc GetMap(GetMapReq)returns (GetMapResp);
 }

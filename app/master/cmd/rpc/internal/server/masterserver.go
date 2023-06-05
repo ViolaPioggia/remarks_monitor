@@ -26,3 +26,8 @@ func (s *MasterServer) Master(ctx context.Context, in *pb.WorkReq) (*pb.WorkResp
 	l := logic.NewMasterLogic(ctx, s.svcCtx)
 	return l.Master(in)
 }
+
+func (s *MasterServer) GetMap(ctx context.Context, in *pb.GetMapReq) (*pb.GetMapResp, error) {
+	l := logic.NewGetMapLogic(ctx, s.svcCtx)
+	return l.GetMap(in)
+}

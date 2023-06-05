@@ -4,10 +4,10 @@ import (
 	"flag"
 	"fmt"
 
-	"remarks_monitor/app/map/cmd/rpc/internal/config"
-	"remarks_monitor/app/map/cmd/rpc/internal/server"
-	"remarks_monitor/app/map/cmd/rpc/internal/svc"
-	"remarks_monitor/app/map/cmd/rpc/pb"
+	"remarks_monitor/app/worker/cmd/rpc/internal/config"
+	"remarks_monitor/app/worker/cmd/rpc/internal/server"
+	"remarks_monitor/app/worker/cmd/rpc/internal/svc"
+	"remarks_monitor/app/worker/cmd/rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"
@@ -16,7 +16,7 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
-var configFile = flag.String("f", "etc/map.yaml", "the config file")
+var configFile = flag.String("f", "etc/worker.yaml", "the config file")
 
 func main() {
 	flag.Parse()
@@ -26,7 +26,7 @@ func main() {
 	ctx := svc.NewServiceContext(c)
 
 	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
-		pb.RegisterMapTaskServer(grpcServer, server.NewMapTaskServer(ctx))
+		pb.RegisterWorkerServer(grpcServer, server.NewWorkerServer(ctx))
 
 		if c.Mode == service.DevMode || c.Mode == service.TestMode {
 			reflection.Register(grpcServer)

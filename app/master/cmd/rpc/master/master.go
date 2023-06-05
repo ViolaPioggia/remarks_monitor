@@ -13,11 +13,14 @@ import (
 )
 
 type (
-	WorkReq  = pb.WorkReq
-	WorkResp = pb.WorkResp
+	GetMapReq  = pb.GetMapReq
+	GetMapResp = pb.GetMapResp
+	WorkReq    = pb.WorkReq
+	WorkResp   = pb.WorkResp
 
 	Master interface {
 		Master(ctx context.Context, in *WorkReq, opts ...grpc.CallOption) (*WorkResp, error)
+		GetMap(ctx context.Context, in *GetMapReq, opts ...grpc.CallOption) (*GetMapResp, error)
 	}
 
 	defaultMaster struct {
@@ -34,4 +37,9 @@ func NewMaster(cli zrpc.Client) Master {
 func (m *defaultMaster) Master(ctx context.Context, in *WorkReq, opts ...grpc.CallOption) (*WorkResp, error) {
 	client := pb.NewMasterClient(m.cli.Conn())
 	return client.Master(ctx, in, opts...)
+}
+
+func (m *defaultMaster) GetMap(ctx context.Context, in *GetMapReq, opts ...grpc.CallOption) (*GetMapResp, error) {
+	client := pb.NewMasterClient(m.cli.Conn())
+	return client.GetMap(ctx, in, opts...)
 }
