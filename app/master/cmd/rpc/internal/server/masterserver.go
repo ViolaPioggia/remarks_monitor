@@ -31,3 +31,8 @@ func (s *MasterServer) GetMap(ctx context.Context, in *pb.GetMapReq) (*pb.GetMap
 	l := logic.NewGetMapLogic(ctx, s.svcCtx)
 	return l.GetMap(in)
 }
+
+func (s *MasterServer) GetRpc(ctx context.Context, in *pb.GetRpcReq) (*pb.GetRpcResp, error) {
+	l := logic.NewGetRpcLogic(ctx, s.svcCtx)
+	return l.GetRpc(in)
+}

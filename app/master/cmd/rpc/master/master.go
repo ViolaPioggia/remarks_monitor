@@ -15,12 +15,15 @@ import (
 type (
 	GetMapReq  = pb.GetMapReq
 	GetMapResp = pb.GetMapResp
+	GetRpcReq  = pb.GetRpcReq
+	GetRpcResp = pb.GetRpcResp
 	WorkReq    = pb.WorkReq
 	WorkResp   = pb.WorkResp
 
 	Master interface {
 		Master(ctx context.Context, in *WorkReq, opts ...grpc.CallOption) (*WorkResp, error)
 		GetMap(ctx context.Context, in *GetMapReq, opts ...grpc.CallOption) (*GetMapResp, error)
+		GetRpc(ctx context.Context, in *GetRpcReq, opts ...grpc.CallOption) (*GetRpcResp, error)
 	}
 
 	defaultMaster struct {
@@ -42,4 +45,9 @@ func (m *defaultMaster) Master(ctx context.Context, in *WorkReq, opts ...grpc.Ca
 func (m *defaultMaster) GetMap(ctx context.Context, in *GetMapReq, opts ...grpc.CallOption) (*GetMapResp, error) {
 	client := pb.NewMasterClient(m.cli.Conn())
 	return client.GetMap(ctx, in, opts...)
+}
+
+func (m *defaultMaster) GetRpc(ctx context.Context, in *GetRpcReq, opts ...grpc.CallOption) (*GetRpcResp, error) {
+	client := pb.NewMasterClient(m.cli.Conn())
+	return client.GetRpc(ctx, in, opts...)
 }

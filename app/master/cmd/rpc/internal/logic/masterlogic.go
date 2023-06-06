@@ -193,7 +193,7 @@ func (c *Master) makeMapTasks(files []string) {
 		}
 		c.taskMetaHolder.acceptMeta(&taskMetaInfo)
 
-		//fmt.Println("make a map task :", &task)
+		//fmt.Println("make a MapReduce task :", &task)
 		c.MapTaskChannel <- &task
 	}
 }
@@ -309,7 +309,7 @@ func (c *Master) toNextPhase() {
 	}
 }
 
-// 检查多少个任务做了包括（map、reduce）,
+// 检查多少个任务做了包括（MapReduce、reduce）,
 func (t *TaskMetaHolder) checkTaskDone() bool {
 
 	var (
@@ -338,7 +338,7 @@ func (t *TaskMetaHolder) checkTaskDone() bool {
 		}
 
 	}
-	//fmt.Printf("map tasks  are finished %d/%d, reduce task are finished %d/%d \n",
+	//fmt.Printf("MapReduce tasks  are finished %d/%d, reduce task are finished %d/%d \n",
 	//	mapDoneNum, mapDoneNum+mapUnDoneNum, reduceDoneNum, reduceDoneNum+reduceUnDoneNum)
 
 	// 如果某一个map或者reduce全部做完了，代表需要切换下一阶段，返回true

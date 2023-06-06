@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option go_package = "./pb";
+
+package pb;
+
+message ReduceWorkReq {
+
+}
+
+message ReduceWorkResp {
+
+}
+
+service ReduceWork {
+  rpc ReduceWork(ReduceWorkReq) returns (ReduceWorkResp);
+}

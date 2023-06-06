@@ -8,9 +8,15 @@ message GetMapReq{
 
 }
 message GetMapResp{
-  int64 MNum=1;
-  repeated string files=2;
+
 }
+message GetRpcReq{
+
+}
+message GetRpcResp{
+
+}
+
 message WorkReq {
 
 }
@@ -22,4 +28,5 @@ message WorkResp {
 service Master {
   rpc master(WorkReq) returns (WorkResp);
   rpc GetMap(GetMapReq)returns (GetMapResp);
+  rpc GetRpc(GetRpcReq)returns(GetRpcResp);
 }

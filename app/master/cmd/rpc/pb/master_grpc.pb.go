@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	Master_Master_FullMethodName = "/pb.Master/master"
 	Master_GetMap_FullMethodName = "/pb.Master/GetMap"
+	Master_GetRpc_FullMethodName = "/pb.Master/GetRpc"
 )
 
 // MasterClient is the client API for Master service.
@@ -29,6 +30,7 @@ const (
 type MasterClient interface {
 	Master(ctx context.Context, in *WorkReq, opts ...grpc.CallOption) (*WorkResp, error)
 	GetMap(ctx context.Context, in *GetMapReq, opts ...grpc.CallOption) (*GetMapResp, error)
+	GetRpc(ctx context.Context, in *GetRpcReq, opts ...grpc.CallOption) (*GetRpcResp, error)
 }
 
 type masterClient struct {
@@ -57,12 +59,22 @@ func (c *masterClient) GetMap(ctx context.Context, in *GetMapReq, opts ...grpc.C
 	return out, nil
 }
 
+func (c *masterClient) GetRpc(ctx context.Context, in *GetRpcReq, opts ...grpc.CallOption) (*GetRpcResp, error) {
+	out := new(GetRpcResp)
+	err := c.cc.Invoke(ctx, Master_GetRpc_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MasterServer is the server API for Master service.
 // All implementations must embed UnimplementedMasterServer
 // for forward compatibility
 type MasterServer interface {
 	Master(context.Context, *WorkReq) (*WorkResp, error)
 	GetMap(context.Context, *GetMapReq) (*GetMapResp, error)
+	GetRpc(context.Context, *GetRpcReq) (*GetRpcResp, error)
 	mustEmbedUnimplementedMasterServer()
 }
 
@@ -75,6 +87,9 @@ func (UnimplementedMasterServer) Master(context.Context, *WorkReq) (*WorkResp, e
 }
 func (UnimplementedMasterServer) GetMap(context.Context, *GetMapReq) (*GetMapResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMap not implemented")
+}
+func (UnimplementedMasterServer) GetRpc(context.Context, *GetRpcReq) (*GetRpcResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRpc not implemented")
 }
 func (UnimplementedMasterServer) mustEmbedUnimplementedMasterServer() {}
 
@@ -125,6 +140,24 @@ func _Master_GetMap_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Master_GetRpc_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRpcReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MasterServer).GetRpc(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Master_GetRpc_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MasterServer).GetRpc(ctx, req.(*GetRpcReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Master_ServiceDesc is the grpc.ServiceDesc for Master service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -139,6 +172,10 @@ var Master_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetMap",
 			Handler:    _Master_GetMap_Handler,
+		},
+		{
+			MethodName: "GetRpc",
+			Handler:    _Master_GetRpc_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
