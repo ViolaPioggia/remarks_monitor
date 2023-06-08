@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option go_package = "./reduce1";
+
+package reduce1;
+
+message ReduceWorkReq {
+  int64 RNum=1;
+  repeated string paths=2;
+}
+
+message ReduceWorkResp {
+
+}
+
+service ReduceWork1 {
+  rpc ReduceWork1(ReduceWorkReq) returns (ReduceWorkResp);
+}

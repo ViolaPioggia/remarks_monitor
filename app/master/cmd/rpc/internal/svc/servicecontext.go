@@ -2,21 +2,30 @@ package svc
 
 import (
 	"github.com/zeromicro/go-zero/zrpc"
-	"remarks_monitor/app/map/cmd/rpc/mapwork"
+	mapwork1 "remarks_monitor/app/map1/cmd/rpc/mapwork"
+	mapwork2 "remarks_monitor/app/map2/cmd/rpc/mapwork"
+	mapwork3 "remarks_monitor/app/map3/cmd/rpc/mapwork"
 	"remarks_monitor/app/master/cmd/rpc/internal/config"
-	"remarks_monitor/app/reduce/cmd/rpc/reducework"
+	"remarks_monitor/app/reduce1/cmd/rpc/reducework1"
+	"remarks_monitor/app/reduce2/cmd/rpc/reducework2"
 )
 
 type ServiceContext struct {
-	Config    config.Config
-	MapRpc    mapwork.MapWork
-	ReduceRpc reducework.ReduceWork
+	Config     config.Config
+	MapRpc1    mapwork1.MapWork
+	MapRpc2    mapwork2.MapWork
+	MapRpc3    mapwork3.MapWork
+	ReduceRpc1 reducework1.ReduceWork1
+	ReduceRpc2 reducework2.ReduceWork2
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
 	return &ServiceContext{
-		Config:    c,
-		MapRpc:    mapwork.NewMapWork(zrpc.MustNewClient(c.MapRpcConf)),
-		ReduceRpc: reducework.NewReduceWork(zrpc.MustNewClient(c.ReduceRpcConf)),
+		Config:     c,
+		MapRpc1:    mapwork1.NewMapWork(zrpc.MustNewClient(c.MapRpcConf1)),
+		MapRpc2:    mapwork2.NewMapWork(zrpc.MustNewClient(c.MapRpcConf2)),
+		MapRpc3:    mapwork3.NewMapWork(zrpc.MustNewClient(c.MapRpcConf3)),
+		ReduceRpc1: reducework1.NewReduceWork1(zrpc.MustNewClient(c.ReduceRpcConf1)),
+		ReduceRpc2: reducework2.NewReduceWork2(zrpc.MustNewClient(c.ReduceRpcConf2)),
 	}
 }

@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option go_package = "./map3";
+
+package map3;
+
+
+message GetMapWorkReq {
+  string MNum=1;
+  string paths=2;
+}
+
+message GetMapWorkResp {
+  string director=1;
+}
+
+//service
+service MapWork {
+  rpc MapWork(GetMapWorkReq) returns (GetMapWorkResp);
+}

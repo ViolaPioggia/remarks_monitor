@@ -7,9 +7,12 @@ import (
 
 type Config struct {
 	zrpc.RpcServerConf
-	MapRpcConf    zrpc.RpcClientConf
-	ReduceRpcConf zrpc.RpcClientConf
-	JwtAuth       struct {
+	MapRpcConf1    zrpc.RpcClientConf
+	MapRpcConf2    zrpc.RpcClientConf
+	MapRpcConf3    zrpc.RpcClientConf
+	ReduceRpcConf1 zrpc.RpcClientConf
+	ReduceRpcConf2 zrpc.RpcClientConf
+	JwtAuth        struct {
 		AccessSecret string
 		AccessExpire int64
 	}

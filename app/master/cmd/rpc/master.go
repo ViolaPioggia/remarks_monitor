@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/zeromicro/zero-contrib/zrpc/registry/consul"
+	"remarks_monitor/common/tool"
 
 	"remarks_monitor/app/master/cmd/rpc/internal/config"
 	"remarks_monitor/app/master/cmd/rpc/internal/server"
@@ -16,7 +18,7 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
-var configFile = flag.String("f", "etc/master.yaml", "the config file")
+var configFile = flag.String("f", tool.GetWD()+"/app/master/cmd/rpc/etc/master.yaml", "the config file")
 
 func main() {
 	flag.Parse()
@@ -32,6 +34,7 @@ func main() {
 			reflection.Register(grpcServer)
 		}
 	})
+	_ = consul.RegisterService(c.ListenOn, c.Consul)
 	defer s.Stop()
 
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)
