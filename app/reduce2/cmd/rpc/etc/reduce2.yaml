@@ -1,0 +1,29 @@
+Name: reduce2.rpc
+ListenOn: 0.0.0.0:10005
+Mode: dev
+
+Consul:
+  Host: 127.0.0.1:8500
+  Key: reduce2.rpc
+
+#jwtAuth
+JwtAuth:
+  AccessSecret: ae0536f9-6450-4606-8e13-5a19ed505da0
+  AccessExpire: 31536000
+
+#Monitoring
+Prometheus:
+  Host: 0.0.0.0
+  Port: 20003
+  Path: /metrics
+
+#Link Tracking
+Telemetry:
+  Name: reduce2.rpc
+  Endpoint: http://127.0.0.1:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger
+
+Log:
+  ServiceName: reduce2-rpc
+  Level: error

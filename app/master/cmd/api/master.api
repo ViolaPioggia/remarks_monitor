@@ -1,0 +1,22 @@
+syntax = "v1"
+
+info(
+	title: "数据处理协调服务"
+	desc: "数据处理协调服务"
+	author: "violapioggia"
+	version: "v1"
+)
+
+type MasterReq {
+}
+
+type MasterResp {
+}
+
+@server(
+	group: master
+)
+service master {
+	@handler coordinator
+	get /master (MasterReq) returns (MasterResp)
+}
