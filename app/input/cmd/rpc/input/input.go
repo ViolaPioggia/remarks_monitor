@@ -13,11 +13,14 @@ import (
 )
 
 type (
-	InputReq  = pb.InputReq
-	InputResp = pb.InputResp
+	InputReq   = pb.InputReq
+	InputResp  = pb.InputResp
+	SearchReq  = pb.SearchReq
+	SearchResp = pb.SearchResp
 
 	Input interface {
 		Input(ctx context.Context, in *InputReq, opts ...grpc.CallOption) (*InputResp, error)
+		Search(ctx context.Context, in *SearchReq, opts ...grpc.CallOption) (*SearchResp, error)
 	}
 
 	defaultInput struct {
@@ -34,4 +37,9 @@ func NewInput(cli zrpc.Client) Input {
 func (m *defaultInput) Input(ctx context.Context, in *InputReq, opts ...grpc.CallOption) (*InputResp, error) {
 	client := pb.NewInputClient(m.cli.Conn())
 	return client.Input(ctx, in, opts...)
+}
+
+func (m *defaultInput) Search(ctx context.Context, in *SearchReq, opts ...grpc.CallOption) (*SearchResp, error) {
+	client := pb.NewInputClient(m.cli.Conn())
+	return client.Search(ctx, in, opts...)
 }

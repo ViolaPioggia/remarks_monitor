@@ -3,7 +3,6 @@ package handler
 
 import (
 	"net/http"
-	_ "net/http/pprof"
 
 	master "remarks_monitor/app/master/cmd/api/internal/handler/master"
 	"remarks_monitor/app/master/cmd/api/internal/svc"
@@ -15,9 +14,14 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
-				Method:  http.MethodGet,
+				Method:  http.MethodPost,
 				Path:    "/master",
 				Handler: master.CoordinatorHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/recordSearch",
+				Handler: master.SearchHandler(serverCtx),
 			},
 		},
 	)

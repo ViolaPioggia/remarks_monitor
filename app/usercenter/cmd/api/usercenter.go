@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+	"remarks_monitor/app/casbin"
+	"remarks_monitor/common/tool"
 
 	"remarks_monitor/app/usercenter/cmd/api/internal/config"
 	"remarks_monitor/app/usercenter/cmd/api/internal/handler"
@@ -13,7 +15,7 @@ import (
 	_ "github.com/zeromicro/zero-contrib/zrpc/registry/consul"
 )
 
-var configFile = flag.String("f", "C:/Users/ViolaPioggia/GolandProjects/remarks_monitor/app/usercenter/cmd/api/etc/usercenter.yaml", "the config file")
+var configFile = flag.String("f", tool.GetWD()+"/app/usercenter/cmd/api/etc/usercenter.yaml", "the config file")
 
 func main() {
 	flag.Parse()
@@ -23,7 +25,7 @@ func main() {
 
 	server := rest.MustNewServer(c.RestConf)
 	defer server.Stop()
-
+	casbin.InitCasbin()
 	ctx := svc.NewServiceContext(c)
 	handler.RegisterHandlers(server, ctx)
 

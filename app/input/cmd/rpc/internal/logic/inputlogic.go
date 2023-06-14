@@ -7,7 +7,10 @@ import (
 	"path/filepath"
 	"remarks_monitor/app/input/cmd/rpc/internal/svc"
 	"remarks_monitor/app/input/cmd/rpc/pb"
+	"remarks_monitor/app/input/model"
+	"remarks_monitor/common/tool"
 	"strconv"
+	"time"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -27,7 +30,7 @@ func NewInputLogic(ctx context.Context, svcCtx *svc.ServiceContext) *InputLogic 
 }
 
 func (l *InputLogic) Input(in *pb.InputReq) (*pb.InputResp, error) {
-	dirPath := "C:/Users/ViolaPioggia/GolandProjects/remarks_monitor/data/remarks_monitor/input" // 指定文件夹路径
+	dirPath := tool.GetWD() + "/data/remarks_monitor/input" // 指定文件夹路径
 	fileCount := 0
 
 	err := filepath.Walk(dirPath, func(path string, info os.FileInfo, err error) error {
@@ -48,7 +51,7 @@ func (l *InputLogic) Input(in *pb.InputReq) (*pb.InputResp, error) {
 		return nil, err
 	}
 
-	content := in.Ip + " " + in.Domain + " " + in.Content
+	content := in.Username + " " + in.Domain + " " + in.Content + " " + in.Time
 	fmt.Println(content)
 	file, err := os.OpenFile("C:/Users/ViolaPioggia/GolandProjects/remarks_monitor/data/remarks_monitor/input/input"+strconv.Itoa(fileCount), os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644) // 打开文件
 	if err != nil {
@@ -61,6 +64,18 @@ func (l *InputLogic) Input(in *pb.InputReq) (*pb.InputResp, error) {
 		fmt.Println(err)
 		return nil, err
 	}
-	fmt.Println("write into file success")
+	logx.Info("write into file success")
+	r := &model.Remarks{
+		Username: in.Username,
+		Domain:   in.Domain,
+		Content:  in.Content,
+		CreateAt: time.Now(),
+		UpdateAt: time.Now(),
+	}
+	err = l.svcCtx.RemarksModel.Insert(l.ctx, r)
+	if err != nil {
+		logx.Error("write remark into mongo failed ")
+		return nil, err
+	}
 	return &pb.InputResp{}, nil
 }

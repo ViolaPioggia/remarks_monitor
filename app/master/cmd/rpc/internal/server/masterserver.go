@@ -22,11 +22,6 @@ func NewMasterServer(svcCtx *svc.ServiceContext) *MasterServer {
 	}
 }
 
-func (s *MasterServer) Master(ctx context.Context, in *pb.WorkReq) (*pb.WorkResp, error) {
-	l := logic.NewMasterLogic(ctx, s.svcCtx)
-	return l.Master(in)
-}
-
 func (s *MasterServer) GetMap(ctx context.Context, in *pb.GetMapReq) (*pb.GetMapResp, error) {
 	l := logic.NewGetMapLogic(ctx, s.svcCtx)
 	return l.GetMap(in)
@@ -35,4 +30,9 @@ func (s *MasterServer) GetMap(ctx context.Context, in *pb.GetMapReq) (*pb.GetMap
 func (s *MasterServer) GetRpc(ctx context.Context, in *pb.GetRpcReq) (*pb.GetRpcResp, error) {
 	l := logic.NewGetRpcLogic(ctx, s.svcCtx)
 	return l.GetRpc(in)
+}
+
+func (s *MasterServer) Search(ctx context.Context, in *pb.SearchReq) (*pb.SearchResp, error) {
+	l := logic.NewSearchLogic(ctx, s.svcCtx)
+	return l.Search(in)
 }

@@ -36,3 +36,19 @@ type UserInfoReq struct {
 type UserInfoResp struct {
 	UserInfo User `json:"userInfo"`
 }
+
+type AddAdminReq struct {
+	Username string `json:"username"`
+}
+
+type AddAdminResp struct {
+	Message string `json:"message"`
+}
+
+type RemoveAdminReq struct {
+	Username string `json:"username"`
+}
+
+type RemoveAdminResp struct {
+	Message string `json:"message"`
+}

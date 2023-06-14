@@ -30,6 +30,7 @@ func NewGetMapLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetMapLogi
 }
 
 func (l *GetMapLogic) GetMap(in *pb.GetMapReq) (*pb.GetMapResp, error) {
+	kind := in.Type
 	ch1 := make(chan int, 1)
 	ch2 := make(chan int, 1)
 	ch3 := make(chan int, 1)
@@ -43,16 +44,16 @@ func (l *GetMapLogic) GetMap(in *pb.GetMapReq) (*pb.GetMapResp, error) {
 		select {
 		case ch1 <- i:
 			fmt.Println(1)
-			go l.sendReqToMap1(int64(i), Paths[i], flag, ch1)
+			go l.sendReqToMap1(int64(i), Paths[i], flag, ch1, kind)
 			<-ch1
 			fmt.Println(2)
 		case ch2 <- i:
 			fmt.Println(3)
-			go l.sendReqToMap2(int64(i), Paths[i], flag, ch2)
+			go l.sendReqToMap2(int64(i), Paths[i], flag, ch2, kind)
 			fmt.Println(4)
 		case ch3 <- i:
 			fmt.Println(5)
-			go l.sendReqToMap3(int64(i), Paths[i], flag, ch3)
+			go l.sendReqToMap3(int64(i), Paths[i], flag, ch3, kind)
 			fmt.Println(6)
 		}
 	}
@@ -61,20 +62,20 @@ func (l *GetMapLogic) GetMap(in *pb.GetMapReq) (*pb.GetMapResp, error) {
 		if v == -1 {
 			select {
 			case ch1 <- k:
-				go l.sendReqToMap1(int64(k), Paths[k], flag, ch1)
+				go l.sendReqToMap1(int64(k), Paths[k], flag, ch1, kind)
 			case ch2 <- k:
-				go l.sendReqToMap2(int64(k), Paths[k], flag, ch2)
+				go l.sendReqToMap2(int64(k), Paths[k], flag, ch2, kind)
 			case ch3 <- k:
-				go l.sendReqToMap3(int64(k), Paths[k], flag, ch3)
+				go l.sendReqToMap3(int64(k), Paths[k], flag, ch3, kind)
 			}
 		}
 	}
 	return &pb.GetMapResp{}, nil
 }
 
-func (l *GetMapLogic) sendReqToMap1(MNum int64, Paths string, flag []int, chanlock chan int) {
+func (l *GetMapLogic) sendReqToMap1(MNum int64, Paths string, flag []int, chanlock chan int, kind int64) {
 	flag[MNum] = -1
-	_, err := l.svcCtx.MapRpc1.MapWork(l.ctx, &mapwork.GetMapWorkReq{MNum: strconv.FormatInt(MNum, 10), Paths: Paths})
+	_, err := l.svcCtx.MapRpc1.MapWork(l.ctx, &mapwork.GetMapWorkReq{MNum: strconv.FormatInt(MNum, 10), Paths: Paths, Type: kind})
 	if err != nil {
 		logx.Errorf("send map request to MapNode 1 failed")
 		return
@@ -84,9 +85,9 @@ func (l *GetMapLogic) sendReqToMap1(MNum int64, Paths string, flag []int, chanlo
 	flag[MNum] = 0
 	<-chanlock
 }
-func (l *GetMapLogic) sendReqToMap2(MNum int64, Paths string, flag []int, chanlock chan int) {
+func (l *GetMapLogic) sendReqToMap2(MNum int64, Paths string, flag []int, chanlock chan int, kind int64) {
 	flag[MNum] = -1
-	_, err := l.svcCtx.MapRpc2.MapWork(l.ctx, &mapwork2.GetMapWorkReq{MNum: strconv.FormatInt(MNum, 10), Paths: Paths})
+	_, err := l.svcCtx.MapRpc2.MapWork(l.ctx, &mapwork2.GetMapWorkReq{MNum: strconv.FormatInt(MNum, 10), Paths: Paths, Type: kind})
 	if err != nil {
 		logx.Errorf("send map request to MapNode 2 failed")
 		return
@@ -96,9 +97,9 @@ func (l *GetMapLogic) sendReqToMap2(MNum int64, Paths string, flag []int, chanlo
 	flag[MNum] = 0
 	<-chanlock
 }
-func (l *GetMapLogic) sendReqToMap3(MNum int64, Paths string, flag []int, chanlock chan int) {
+func (l *GetMapLogic) sendReqToMap3(MNum int64, Paths string, flag []int, chanlock chan int, kind int64) {
 	flag[MNum] = -1
-	_, err := l.svcCtx.MapRpc3.MapWork(l.ctx, &mapwork3.GetMapWorkReq{MNum: strconv.FormatInt(MNum, 10), Paths: Paths})
+	_, err := l.svcCtx.MapRpc3.MapWork(l.ctx, &mapwork3.GetMapWorkReq{MNum: strconv.FormatInt(MNum, 10), Paths: Paths, Type: kind})
 	if err != nil {
 		logx.Errorf("send map request to MapNode 3 failed")
 		return

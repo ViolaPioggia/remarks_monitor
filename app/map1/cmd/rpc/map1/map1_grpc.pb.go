@@ -19,7 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	MapWork_MapWork_FullMethodName = "/MapWork/MapWork"
+	MapWork_MapWork_FullMethodName = "/map1.MapWork/MapWork"
 )
 
 // MapWorkClient is the client API for MapWork service.
@@ -96,7 +96,7 @@ func _MapWork_MapWork_Handler(srv interface{}, ctx context.Context, dec func(int
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var MapWork_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "MapWork",
+	ServiceName: "map1.MapWork",
 	HandlerType: (*MapWorkServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

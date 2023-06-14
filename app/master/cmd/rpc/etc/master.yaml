@@ -30,11 +30,25 @@ Log:
 #rpc service
 MapRpcConf1:
   Target: consul://127.0.0.1:8500/map1.rpc?wait=14s
+
 MapRpcConf2:
   Target: consul://127.0.0.1:8500/map2.rpc?wait=14s
+
 MapRpcConf3:
   Target: consul://127.0.0.1:8500/map3.rpc?wait=14s
+
 ReduceRpcConf1:
   Target: consul://127.0.0.1:8500/reduce1.rpc?wait=14s
+
 ReduceRpcConf2:
   Target: consul://127.0.0.1:8500/reduce2.rpc?wait=14s
+
+
+DB:
+  MongoDB:
+    Url: mongodb://localhost:27017/
+    Db: remarks_monitor
+    Collection: records
+Cache:
+  - Host: 127.0.0.1:6379
+    Pass:

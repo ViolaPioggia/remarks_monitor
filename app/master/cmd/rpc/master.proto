@@ -3,30 +3,38 @@ syntax = "proto3";
 option go_package = "./pb";
 
 package pb;
+message Record{
+    string  Type   =1;
+    string  Content =2;
+    int64   Nums     =3;
+    string  UpdateAt=4;
+    string  CreateAt =5;
+}
 
 message GetMapReq{
-
+  int64 type =1;
 }
 message GetMapResp{
 
 }
 message GetRpcReq{
-
+  int64 type=1;
 }
 message GetRpcResp{
 
 }
-
-message WorkReq {
-
+message SearchReq{
+  int64 type=1;
+  int64 offset=2;
+  int64 num=3;
 }
-
-message WorkResp {
+message SearchResp{
+  repeated Record record=1;
 }
 
 //service
 service Master {
-  rpc master(WorkReq) returns (WorkResp);
   rpc GetMap(GetMapReq)returns (GetMapResp);
   rpc GetRpc(GetRpcReq)returns(GetRpcResp);
+  rpc Search(SearchReq)returns(SearchResp);
 }

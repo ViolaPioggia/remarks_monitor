@@ -6,6 +6,10 @@ import (
 )
 
 type Config struct {
+	UserCenterRpcConf zrpc.RpcClientConf
 	rest.RestConf
 	MasterRpcConf zrpc.RpcClientConf
+	JwtAuth       struct {
+		AccessSecret string
+	}
 }

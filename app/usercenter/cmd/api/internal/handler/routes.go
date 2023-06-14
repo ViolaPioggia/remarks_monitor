@@ -24,7 +24,6 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: user.LoginHandler(serverCtx),
 			},
 		},
-		rest.WithPrefix("/usercenter/v1"),
 	)
 
 	server.AddRoutes(
@@ -34,8 +33,17 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/user/detail",
 				Handler: user.DetailHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/addAdmin",
+				Handler: user.AddAdminHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/removeAdmin",
+				Handler: user.RemoveAdminHandler(serverCtx),
+			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
-		rest.WithPrefix("/usercenter/v1"),
 	)
 }

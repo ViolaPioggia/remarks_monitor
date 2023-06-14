@@ -7,6 +7,7 @@ package reduce2;
 message ReduceWorkReq {
   int64 RNum=1;
   repeated string paths=2;
+  int64 type=3;
 }
 
 message ReduceWorkResp {

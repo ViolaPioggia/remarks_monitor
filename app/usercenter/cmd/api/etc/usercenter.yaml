@@ -30,4 +30,4 @@ Log:
 
 #rpc service
 UserCenterRpcConf:
-  Target: consul://127.0.0.1:8500/master.rpc?wait=14s
+  Target: consul://127.0.0.1:8500/usercenter.rpc?wait=14s

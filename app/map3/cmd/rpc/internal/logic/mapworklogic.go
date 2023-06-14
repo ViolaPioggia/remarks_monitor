@@ -36,17 +36,17 @@ func (l *MapWorkLogic) MapWork(in *map3.GetMapWorkReq) (*map3.GetMapWorkResp, er
 	MNum := in.MNum
 	num, _ := strconv.ParseInt(MNum, 10, 64)
 	File := in.Paths
-	DoMapTask(File, int64(num))
+	path := DoMapTask(File, num, in.Type)
 
-	return &map3.GetMapWorkResp{Director: tool.GetWD() + "/remarks_monitor/data/remarks_monitor/MapReduce"}, nil
+	return &map3.GetMapWorkResp{Director: path}, nil
 }
 
-func DoMapTask(filepath string, id int64) {
+func DoMapTask(filepath string, id int64, kind int64) string {
 	var intermediate []KeyValue
 	file, err := os.Open(filepath)
 	if err != nil {
 		fmt.Println("Failed to open file:", err)
-		return
+		return ""
 	}
 	defer file.Close()
 	// 创建文件读取器
@@ -61,30 +61,47 @@ func DoMapTask(filepath string, id int64) {
 
 		// 创建结构体对象并添加到数组中
 		v1 := KeyValue{
-			Key:   fields[1],
+			Key:   fields[kind],
 			Value: strconv.Itoa(1),
 		}
 		intermediate = append(intermediate, v1)
 	}
 	if err := scanner.Err(); err != nil {
 		fmt.Println("Failed to read file:", err)
-		return
+		return ""
 	}
 	tool.GetWD()
 	oname := "mr-tmp-" + strconv.FormatInt(id, 10)
-	ofile, err := os.Create(tool.GetWD() + "/data/remarks_monitor/MapReduce/" + oname)
-	if err != nil {
-		logx.Errorf("create mr-tmp file failed,err is", err)
+	if kind == 0 {
+		ofile, err := os.Create(tool.GetWD() + "/data/remarks_monitor/map_username/" + oname)
+		if err != nil {
+			logx.Errorf(err.Error())
+		}
+		enc := json.NewEncoder(ofile)
+		for _, kv := range intermediate {
+			enc.Encode(kv)
+		}
+		ofile.Close()
+	} else if kind == 1 {
+		ofile, err := os.Create(tool.GetWD() + "/data/remarks_monitor/map_domain/" + oname)
+		if err != nil {
+			logx.Errorf(err.Error())
+		}
+		enc := json.NewEncoder(ofile)
+		for _, kv := range intermediate {
+			enc.Encode(kv)
+		}
+		ofile.Close()
+	} else if kind == 2 {
+		ofile, err := os.Create(tool.GetWD() + "/data/remarks_monitor/map_content/" + oname)
+		if err != nil {
+			logx.Errorf(err.Error())
+		}
+		enc := json.NewEncoder(ofile)
+		for _, kv := range intermediate {
+			enc.Encode(kv)
+		}
+		ofile.Close()
 	}
-	enc := json.NewEncoder(ofile)
-	for _, kv := range intermediate {
-		enc.Encode(kv)
-	}
-	ofile.Close()
+	return tool.GetWD() + "/data/remarks_monitor/MapReduce/" + oname
 }
-
-//func ihash(key string) int {
-//	h := fnv.New32a()
-//	h.Write([]byte(key))
-//	return int(h.Sum32() & 0x7fffffff)
-//}

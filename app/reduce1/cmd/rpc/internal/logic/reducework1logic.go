@@ -40,10 +40,11 @@ func NewReduceWork1Logic(ctx context.Context, svcCtx *svc.ServiceContext) *Reduc
 func (l *ReduceWork1Logic) ReduceWork1(in *reduce1.ReduceWorkReq) (*reduce1.ReduceWorkResp, error) {
 	RNum := in.RNum //map的数量
 	files := in.Paths
-	DoReduceTask(RNum, files)
+	fmt.Println(in.Type)
+	DoReduceTask(RNum, files, in.Type)
 	return &reduce1.ReduceWorkResp{}, nil
 }
-func DoReduceTask(reduceFileNum int64, fileslice []string) {
+func DoReduceTask(reduceFileNum int64, fileslice []string, kind int64) {
 	intermediate := shuffle(fileslice)
 	dir := tool.GetWD() + "/data/remarks_monitor/reduce/"
 	tempFile, err := os.CreateTemp(dir, "mr-tmp-*")
@@ -67,7 +68,8 @@ func DoReduceTask(reduceFileNum int64, fileslice []string) {
 	}
 	tempFile.Close()
 	// 在完全写入后进行重命名
-	fn := fmt.Sprintf(dir+"mr-out-%d", reduceFileNum)
+
+	fn := fmt.Sprintf(dir+judgeKind(kind)+"mr-out-%d", reduceFileNum)
 	err = os.Rename(tempFile.Name(), fn)
 	if err != nil {
 		fmt.Println(err)
@@ -91,4 +93,18 @@ func shuffle(files []string) []KeyValue {
 	}
 	sort.Sort(SortedKey(kva))
 	return kva
+}
+func judgeKind(kind int64) string {
+	switch kind {
+	case 0:
+		fn := "username/"
+		return fn
+	case 1:
+		fn := "domain/"
+		return fn
+	case 2:
+		fn := "content/"
+		return fn
+	}
+	return ""
 }

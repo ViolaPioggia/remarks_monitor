@@ -26,3 +26,11 @@ Telemetry:
 Log:
   ServiceName: input-rpc
   Level: error
+DB:
+  MongoDB:
+    Url: mongodb://localhost:27017/
+    Db: remarks_monitor
+    Collection: remarks_monitor
+Cache:
+  - Host: 127.0.0.1:6379
+    Pass:

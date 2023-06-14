@@ -47,7 +47,6 @@ type (
 //============================> usercenter v1 <============================
 //no need login
 @server(
-	prefix: usercenter/v1
 	group: user
 )
 service usercenter {
@@ -61,9 +60,25 @@ service usercenter {
 	post /user/login (LoginReq) returns (LoginResp)
 }
 
+type (
+	AddAdminReq {
+		Username string `json:"username"`
+	}
+	AddAdminResp {
+		Message string `json:"message"`
+	}
+)
+
+type (
+	RemoveAdminReq {
+		Username string `json:"username"`
+	}
+	RemoveAdminResp {
+		Message string `json:"message"`
+	}
+)
 //need login
 @server(
-	prefix: usercenter/v1
 	group: user
 	jwt: JwtAuth
 )
@@ -72,5 +87,11 @@ service usercenter {
 	@doc "get user info"
 	@handler detail
 	post /user/detail (UserInfoReq) returns (UserInfoResp)
+	
+	@handler addAdmin
+	post /addAdmin (AddAdminReq) returns (AddAdminResp)
+	
+	@handler removeAdmin
+	post /removeAdmin (RemoveAdminReq) returns (RemoveAdminResp)
 	
 }

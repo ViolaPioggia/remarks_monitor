@@ -8,6 +8,7 @@ package map3;
 message GetMapWorkReq {
   string MNum=1;
   string paths=2;
+  int64 type=3;
 }
 
 message GetMapWorkResp {

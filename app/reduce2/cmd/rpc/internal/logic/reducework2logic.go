@@ -5,13 +5,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+
+	"remarks_monitor/app/reduce2/cmd/rpc/reduce2"
 	"remarks_monitor/common/tool"
 	"sort"
 
-	"remarks_monitor/app/reduce2/cmd/rpc/internal/svc"
-	"remarks_monitor/app/reduce2/cmd/rpc/reduce2"
-
 	"github.com/zeromicro/go-zero/core/logx"
+	"remarks_monitor/app/reduce2/cmd/rpc/internal/svc"
 )
 
 type ReduceWork1Logic struct {
@@ -40,10 +40,11 @@ func NewReduceWork2Logic(ctx context.Context, svcCtx *svc.ServiceContext) *Reduc
 func (l *ReduceWork1Logic) ReduceWork2(in *reduce2.ReduceWorkReq) (*reduce2.ReduceWorkResp, error) {
 	RNum := in.RNum //map的数量
 	files := in.Paths
-	DoReduceTask(RNum, files)
+	fmt.Println(in.Type)
+	DoReduceTask(RNum, files, in.Type)
 	return &reduce2.ReduceWorkResp{}, nil
 }
-func DoReduceTask(reduceFileNum int64, fileslice []string) {
+func DoReduceTask(reduceFileNum int64, fileslice []string, kind int64) {
 	intermediate := shuffle(fileslice)
 	dir := tool.GetWD() + "/data/remarks_monitor/reduce/"
 	tempFile, err := os.CreateTemp(dir, "mr-tmp-*")
@@ -67,7 +68,8 @@ func DoReduceTask(reduceFileNum int64, fileslice []string) {
 	}
 	tempFile.Close()
 	// 在完全写入后进行重命名
-	fn := fmt.Sprintf(dir+"mr-out-%d", reduceFileNum)
+
+	fn := fmt.Sprintf(dir+judgeKind(kind)+"mr-out-%d", reduceFileNum)
 	err = os.Rename(tempFile.Name(), fn)
 	if err != nil {
 		fmt.Println(err)
@@ -91,4 +93,18 @@ func shuffle(files []string) []KeyValue {
 	}
 	sort.Sort(SortedKey(kva))
 	return kva
+}
+func judgeKind(kind int64) string {
+	switch kind {
+	case 0:
+		fn := "username/"
+		return fn
+	case 1:
+		fn := "domain/"
+		return fn
+	case 2:
+		fn := "content/"
+		return fn
+	}
+	return ""
 }

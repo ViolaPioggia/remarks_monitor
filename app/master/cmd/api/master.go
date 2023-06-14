@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	_ "net/http/pprof"
+	"remarks_monitor/app/casbin"
 	"remarks_monitor/app/master/cmd/api/internal/config"
 	"remarks_monitor/app/master/cmd/api/internal/handler"
 	"remarks_monitor/app/master/cmd/api/internal/svc"
@@ -26,7 +27,7 @@ func main() {
 
 	ctx := svc.NewServiceContext(c)
 	handler.RegisterHandlers(server, ctx)
-
+	casbin.InitCasbin()
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	server.Start()
 }
