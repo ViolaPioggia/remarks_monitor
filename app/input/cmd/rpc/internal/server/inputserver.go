@@ -26,3 +26,8 @@ func (s *InputServer) Input(ctx context.Context, in *pb.InputReq) (*pb.InputResp
 	l := logic.NewInputLogic(ctx, s.svcCtx)
 	return l.Input(in)
 }
+
+func (s *InputServer) Search(ctx context.Context, in *pb.SearchReq) (*pb.SearchResp, error) {
+	l := logic.NewSearchLogic(ctx, s.svcCtx)
+	return l.Search(in)
+}

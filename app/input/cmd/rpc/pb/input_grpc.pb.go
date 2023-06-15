@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Input_Input_FullMethodName = "/pb.input/input"
+	Input_Input_FullMethodName  = "/pb.input/input"
+	Input_Search_FullMethodName = "/pb.input/search"
 )
 
 // InputClient is the client API for Input service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type InputClient interface {
 	Input(ctx context.Context, in *InputReq, opts ...grpc.CallOption) (*InputResp, error)
+	Search(ctx context.Context, in *SearchReq, opts ...grpc.CallOption) (*SearchResp, error)
 }
 
 type inputClient struct {
@@ -46,11 +48,21 @@ func (c *inputClient) Input(ctx context.Context, in *InputReq, opts ...grpc.Call
 	return out, nil
 }
 
+func (c *inputClient) Search(ctx context.Context, in *SearchReq, opts ...grpc.CallOption) (*SearchResp, error) {
+	out := new(SearchResp)
+	err := c.cc.Invoke(ctx, Input_Search_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // InputServer is the server API for Input service.
 // All implementations must embed UnimplementedInputServer
 // for forward compatibility
 type InputServer interface {
 	Input(context.Context, *InputReq) (*InputResp, error)
+	Search(context.Context, *SearchReq) (*SearchResp, error)
 	mustEmbedUnimplementedInputServer()
 }
 
@@ -60,6 +72,9 @@ type UnimplementedInputServer struct {
 
 func (UnimplementedInputServer) Input(context.Context, *InputReq) (*InputResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Input not implemented")
+}
+func (UnimplementedInputServer) Search(context.Context, *SearchReq) (*SearchResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Search not implemented")
 }
 func (UnimplementedInputServer) mustEmbedUnimplementedInputServer() {}
 
@@ -92,6 +107,24 @@ func _Input_Input_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Input_Search_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InputServer).Search(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Input_Search_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InputServer).Search(ctx, req.(*SearchReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Input_ServiceDesc is the grpc.ServiceDesc for Input service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -102,6 +135,10 @@ var Input_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "input",
 			Handler:    _Input_Input_Handler,
+		},
+		{
+			MethodName: "search",
+			Handler:    _Input_Search_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

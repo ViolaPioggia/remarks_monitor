@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/zeromicro/zero-contrib/zrpc/registry/consul"
+	"remarks_monitor/common/tool"
 
 	"remarks_monitor/app/input/cmd/rpc/internal/config"
 	"remarks_monitor/app/input/cmd/rpc/internal/server"
@@ -17,7 +18,7 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
-var configFile = flag.String("f", "C:/Users/ViolaPioggia/GolandProjects/remarks_monitor/app/input/cmd/rpc/etc/input.yaml", "the config file")
+var configFile = flag.String("f", tool.GetWD()+"/app/input/cmd/rpc/etc/input.yaml", "the config file")
 
 func main() {
 	flag.Parse()

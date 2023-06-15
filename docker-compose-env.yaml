@@ -4,6 +4,7 @@ services:
   mongo:
     image: mongo
     container_name: mongo
+    restart: always
     ports:
       - "27017:27017"
     environment:
@@ -154,39 +155,6 @@ services:
       - remarks-monitor_net
     depends_on:
       - kafka
-
-  nsqlookupd:
-    image: nsqio/nsq:v1.2.0
-    command: /nsqlookupd
-    ports:
-      - "4160:4160"
-      - "4161:4161"
-    restart: always
-    networks:
-      - remarks-monitor_net
-
-  nsqd:
-      image: nsqio/nsq:v1.2.0
-      command: /nsqd --lookupd-tcp-address=nsqlookupd:4160
-      depends_on:
-        - nsqlookupd
-      ports:
-        - "4150:4150"
-        - "4151:4151"
-      restart: always
-      networks:
-        - remarks-monitor_net
-
-  nsqadmin:
-      image: nsqio/nsq:v1.2.0
-      command: /nsqadmin --lookupd-http-address=nsqlookupd:4161
-      depends_on:
-        - nsqlookupd
-      ports:
-        - "4171:4171"
-      restart: always
-      networks:
-        - remarks-monitor_net
   #zookeeper是kafka的依赖 - Zookeeper is the dependencies of Kafka
   zookeeper:
     image: wurstmeister/zookeeper

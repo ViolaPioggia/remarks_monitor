@@ -22,17 +22,66 @@ scrape_configs:
           job: usercenter-rpc
           app: usercenter-rpc
           env: dev
-#  - job_name: 'mqueue-job'
-#    static_configs:
-#      - targets: [ 'looklook:4010' ]
-#        labels:
-#          job: mqueue-job
-#          app: mqueue-job
-#          env: dev
-#  - job_name: 'mqueue-scheduler'
-#    static_configs:
-#      - targets: [ 'looklook:4011' ]
-#        labels:
-#          job: mqueue-scheduler
-#          app: mqueue-scheduler
-#          env: dev
+  - job_name: 'master-api'
+    static_configs:
+      - targets: [ '192.168.26.1:4003' ]
+        labels:
+          job: master-rpc
+          app: master-rpc
+          env: dev
+  - job_name: 'master-rpc'
+    static_configs:
+      - targets: [ '192.168.26.1:4004' ]
+        labels:
+          job: master-rpc
+          app: master-rpc
+          env: dev
+  - job_name: 'input-api'
+    static_configs:
+      - targets: [ '192.168.26.1:4005' ]
+        labels:
+          job: input-api
+          app: input-api
+          env: dev
+  - job_name: 'input-rpc'
+    static_configs:
+      - targets: [ '192.168.26.1:4006' ]
+        labels:
+          job: input-rpc
+          app: input-rpc
+          env: dev
+  - job_name: 'map1-rpc'
+    static_configs:
+      - targets: [ '192.168.26.1:20001' ]
+        labels:
+          job: map1-rpc
+          app: map1-rpc
+          env: dev
+  - job_name: 'map2-rpc'
+    static_configs:
+      - targets: [ '192.168.26.1:20002' ]
+        labels:
+          job: map2-rpc
+          app: map2-rpc
+          env: dev
+  - job_name: 'map3-rpc'
+    static_configs:
+      - targets: [ '192.168.26.1:20003' ]
+        labels:
+          job: input-rpc
+          app: input-rpc
+          env: dev
+  - job_name: 'reduce1-rpc'
+    static_configs:
+      - targets: [ '192.168.26.1:20004' ]
+        labels:
+          job: reduce1-rpc
+          app: reduce1-rpc
+          env: dev
+  - job_name: 'reduce2-rpc'
+    static_configs:
+      - targets: [ '192.168.26.1:20004' ]
+        labels:
+          job: reduce2-rpc
+          app: reduce2-rpc
+          env: dev

@@ -14,7 +14,7 @@ JwtAuth:
 #Monitoring
 Prometheus:
   Host: 0.0.0.0
-  Port: 20003
+  Port: 20004
   Path: /metrics
 
 #Link Tracking

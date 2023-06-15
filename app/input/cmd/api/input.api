@@ -1,0 +1,45 @@
+syntax = "v1"
+
+type Info {
+	Username string `json:"username"`
+	Domain   string `json:"domain"`
+	Content  string `json:"content"`
+	Time     string `json:"time"`
+}
+
+type InputRequest {
+	Info Info `json:"info"`
+}
+
+type InputResponse {
+	Message string `json:"message"`
+}
+
+type SearchRequest {
+}
+
+type SearchResponse {
+	Info []Info `json:"info"`
+}
+
+type SearchAllRequest {
+	Username string `json:"username"`
+}
+
+type SearchAllResponse {
+	Info []Info `json:"info"`
+}
+
+@server(
+	jwt: JwtAuth
+)
+service input {
+	@handler input
+	post /input (InputRequest) returns (InputResponse)
+	
+	@handler search
+	get /search (SearchRequest) returns (SearchResponse)
+	
+	@handler searchAll
+	post /searchAll (SearchAllRequest) returns (SearchAllResponse)
+}
