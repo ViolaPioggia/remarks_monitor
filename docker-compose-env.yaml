@@ -164,7 +164,7 @@ services:
       TZ: Asia/Shanghai
     restart: always
     ports:
-      - 2181:2181
+      - "2181:2181"
     networks:
       - remarks-monitor_net
 
