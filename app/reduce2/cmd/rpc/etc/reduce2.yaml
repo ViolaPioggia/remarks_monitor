@@ -27,3 +27,5 @@ Telemetry:
 Log:
   ServiceName: reduce2-rpc
   Level: error
+  
+Timeout: 5000

@@ -144,7 +144,7 @@ func (l *GetRpcLogic) GetRpc(in *pb.GetRpcReq) (*pb.GetRpcResp, error) {
 		}
 		data = append(data, *r)
 	}
-	l.svcCtx.RecordsModel.InsertMany(context.Background(), data)
+	err = l.svcCtx.RecordsModel.InsertMany(context.Background(), data)
 	if err != nil {
 		return nil, err
 	}

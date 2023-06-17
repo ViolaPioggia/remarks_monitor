@@ -27,3 +27,5 @@ Telemetry:
 Log:
   ServiceName: map3-rpc
   Level: error
+  
+Timeout: 5000

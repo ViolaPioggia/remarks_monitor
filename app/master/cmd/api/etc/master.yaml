@@ -28,7 +28,7 @@ Log:
   ServiceName: master-api
   Level: error
 
-Timeout: 10000
+Timeout: 100000
 
 #rpc service
 MasterRpcConf:
@@ -36,7 +36,7 @@ MasterRpcConf:
 #  Endpoints:
 #    - 127.0.0.1:2004
 #  NonBlock: true
-  Timeout: 10000
+  Timeout: 100000
 
 UserCenterRpcConf:
     Target: consul://127.0.0.1:8500/usercenter.rpc?wait=14s

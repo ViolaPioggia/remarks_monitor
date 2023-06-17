@@ -7,7 +7,6 @@ import (
 	"remarks_monitor/app/casbin"
 	"remarks_monitor/app/master/cmd/rpc/master"
 	"remarks_monitor/app/usercenter/cmd/rpc/usercenter"
-	"remarks_monitor/common/ctxdata"
 	"time"
 
 	"remarks_monitor/app/master/cmd/api/internal/svc"
@@ -31,8 +30,8 @@ func NewCoordinatorLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Coord
 }
 
 func (l *CoordinatorLogic) Coordinator(req *types.MasterReq) (resp *types.MasterResp, err error) {
-	userId := ctxdata.GetUidFromCtx(l.ctx)
-	data, err := l.svcCtx.UserCenterRpc.GetUserInfo(l.ctx, &usercenter.GetUserInfoReq{Id: userId})
+	//userId := ctxdata.GetUidFromCtx(l.ctx)
+	data, err := l.svcCtx.UserCenterRpc.GetUserInfo(l.ctx, &usercenter.GetUserInfoReq{Id: 2})
 	username := data.User.Username
 	flag := casbin.CheckPermission(username, "read", "admin")
 	if !flag {

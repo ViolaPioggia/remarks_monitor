@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  reverse-proxy:
+    # The official v2 Traefik docker image
+    image: traefik:v2.9
+    restart: always
+    # Enables the web UI and tells Traefik to listen to docker
+    command: --api.insecure=true --providers.docker=true
+    ports:
+      # The HTTP port
+      - "90:80"
+      # The Web UI (enabled by --api.insecure=true)
+      - "8080:8080"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - remarks-monitor_net
+  usercenter-api:
+    image: usercenter-api
+    restart: always
+    ports:
+      - "1001:1001"
+      - "4001:4001"
+    networks:
+      - remarks-monitor_net
+  usercenter-rpc:
+    image: usercenter-rpc
+    restart: always
+    ports:
+      - "2001:2001"
+      - "4002:4002"
+    networks:
+      - remarks-monitor_net
+
+networks:
+  remarks-monitor_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

@@ -23,6 +23,8 @@ Telemetry:
   Sampler: 1.0
   Batcher: jaeger
 
+Timeout: 100000
+
 Log:
   ServiceName: master-rpc
   Level: error
@@ -30,18 +32,23 @@ Log:
 #rpc service
 MapRpcConf1:
   Target: consul://127.0.0.1:8500/map1.rpc?wait=14s
+  Timeout: 10000
 
 MapRpcConf2:
   Target: consul://127.0.0.1:8500/map2.rpc?wait=14s
+  Timeout: 10000
 
 MapRpcConf3:
   Target: consul://127.0.0.1:8500/map3.rpc?wait=14s
+  Timeout: 10000
 
 ReduceRpcConf1:
   Target: consul://127.0.0.1:8500/reduce1.rpc?wait=14s
+  Timeout: 10000
 
 ReduceRpcConf2:
   Target: consul://127.0.0.1:8500/reduce2.rpc?wait=14s
+  Timeout: 10000
 
 
 DB:
