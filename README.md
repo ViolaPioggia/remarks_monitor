@@ -476,4 +476,40 @@ func main() {
 
 
 
-剩下的明早起来写
+MapReduce体现的优势：
+
+- ​	纯算法遍历，用 map 储存不能保证并发安全
+
+- ​	数据集较小的时候还好，如果数据集庞大的时候可能会导致堆栈溢出
+
+  ![QQ截图20230610163948](D:\桌面\QQ截图20230610163948.png)
+
+​	。。。
+
+
+
+参考资料：
+
+​	6.5840 Lab 1: MapReducehttps://pdos.csail.mit.edu/6.824/labs/lab-mr.html
+
+​	MapReduce: Simplified Data Processing on Large Clustershttps://www.cnblogs.com/fuzhe1989/p/3413457.html
+
+​	MIT6.824-lab1-2022篇(万字推导思路及代码构建）https://blog.csdn.net/weixin_45938441/article/details/124018485
+
+​	深入浅出讲解 MapReduce https://www.bilibili.com/video/BV1Vb411m7go/?from=search&seid=8676892438131853528&vd_source=871438385e5263b3f9fd635c1073f8b1
+
+
+
+### 写在最后|整个项目的一些感悟
+
+- 算是手搓了一个简化版的 MapReduce，大部分代码都是自己手写的。算法上并没有什么难度，主要是要结合微服务分布式来使用。其中关于节点可拓展性和容错性做的还不够好，甚至说性能也有很大空间可以优化，总体来说花了几天时间研究各方资料还是勉强成功了
+
+- 因为本项目是大数据相关项目，所以采用了可以处理大吞吐量的多个日志管理组件，但是分布式日志管理系统只停留在了勉强配好环境的状态，想要进一步深入还要花不少时间
+
+- 本来计划使用kafka写一个延时任务用来定时每天执行任务，后来因为种种原因没有实现，有点遗憾
+
+- 借由本项目，我又收获很多，同时也明白了存在哪些不足
+
+- 最后，感谢前辈们一直以来的悉心指导
+
+  Fly, My Wings - Mili
